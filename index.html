@@ -3,15 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frameless Minimalist Grid - Worksheet Edition</title>
+    <title>Frameless Minimalist Grid - Worksheet Edition (Updated Look)</title>
     <style>
-        /* --- RESET & SETUP --- */
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        /* --- RESET & SETUP (GAYA BARU) --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Quicksand', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+
+        @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@500;700&display=swap');
 
         :root {
-            --primary-color: #18375d; /* Biru Navy */
-            --bg-card-content: #ffffff;
-            --shadow-soft: 0 4px 15px rgba(0,0,0,0.05);
+            /* --- WARNA DARI CODE KE-2 --- */
+            
+            /* Background Kotak: Kuning soft */
+            --bg-card-content: #fffde7; 
+            
+            /* Warna Button */
+            --btn-color: #8bc34a;
+            --btn-shadow-color: #558b2f; 
+
+            /* Warna Harga */
+            --price-color: darkblue;
+            
+            /* Warna Border & Shadow Card */
+            --border-card: #fbc02d; 
+            --shadow-soft: 0 6px 0px rgba(251, 192, 45, 0.4); 
+            
+            /* Warna Teks */
+            --text-main: #5d4037;
+            --text-secondary: #8d6e63;
         }
 
         body {
@@ -20,6 +38,7 @@
             justify-content: center;
             align-items: flex-start;
             padding: 10px; 
+            height: auto;
             min-height: 100vh;
         }
 
@@ -32,25 +51,15 @@
         .product-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr); 
-            gap: 8px; /* Gap kecil agar kotak luas */
+            gap: 12px;
             width: 100%;
         }
 
         @media (min-width: 768px) {
             .product-grid {
                 grid-template-columns: repeat(4, 1fr);
-                gap: 20px;
+                gap: 24px;
             }
-        }
-
-        /* --- ANIMASI GETER (VIBRATE) --- */
-        @keyframes geter {
-            0% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
-            100% { transform: translate(0); }
         }
 
         /* --- PRODUCT CARD STRUCTURE --- */
@@ -61,12 +70,12 @@
             border: none;
         }
 
-        /* --- BAGIAN GAMBAR (TRANSPARAN) --- */
+        /* --- BAGIAN GAMBAR (STYLE BARU: ROTATE HOVER) --- */
         .card-image-wrapper {
             position: relative;
             width: 100%;
-            padding-top: 100%; /* Rasio 1:1 */
-            margin-bottom: -15px; /* Overlap ke bawah */
+            padding-top: 100%; 
+            margin-bottom: -20px;
             z-index: 2; 
         }
 
@@ -79,85 +88,107 @@
             height: 100%;
             object-fit: contain; 
             filter: drop-shadow(0 5px 10px rgba(0,0,0,0.1));
-            transition: transform 0.3s ease;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .product-card:hover .card-image {
-            transform: translate(-50%, -50%) scale(1.05);
+            transform: translate(-50%, -50%) scale(1.08) rotate(-2deg);
         }
 
-        /* --- BAGIAN KONTEN (KOTAK PUTIH) --- */
+        /* --- BAGIAN KONTEN (STYLE BARU: FLAT SHADOW) --- */
         .card-content {
             background: var(--bg-card-content);
-            padding: 20px 10px 12px 10px; 
-            border-radius: 12px;
-            box-shadow: var(--shadow-soft);
-            border: 1px solid #f0f0f0;
+            padding: 24px 12px 14px 12px; 
+            border-radius: 16px;
+            
+            /* Flat Shadow Style */
+            box-shadow: 0 4px 0 var(--border-card); 
+            border: 2px solid var(--border-card);
+            
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             flex-grow: 1;
             z-index: 1;
             text-align: left;
+            transition: transform 0.2s ease;
+        }
+        
+        .product-card:hover .card-content {
+            transform: translateY(-2px);
         }
 
         .product-name {
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: #333;
+            font-size: 0.9rem;
+            font-weight: 700; 
+            color: var(--text-main);
             margin-bottom: 8px;
-            line-height: 1.35;
-            height: 2.7em; 
+            line-height: 1.3;
+            height: 2.6em; 
             display: -webkit-box;
             -webkit-line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
 
+        /* --- HARGA (STYLE BARU) --- */
         .price-container {
-            margin-bottom: 4px;
+            margin-bottom: 8px;
+            display: flex;
+            flex-direction: column; 
+            align-items: flex-start;
         }
 
         .original-price {
-            font-size: 0.7rem;
-            color: #bbb;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
             text-decoration: line-through;
-            margin-right: 5px;
+            font-weight: 500;
+            margin-bottom: 2px; 
         }
 
         .discount-price {
-            font-size: 0.95rem;
-            color: var(--primary-color);
-            font-weight: 700;
+            font-size: 1rem;
+            color: var(--price-color);
+            font-weight: 800;
         }
 
         .rating {
-            font-size: 0.7rem;
-            color: #777;
-            margin-bottom: 10px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            font-weight: 600;
         }
-        .star { color: #fbbf24; }
+        .star { color: #ffa000; }
 
-        /* --- TOMBOL (OUTLINE + GETER) --- */
+        /* --- TOMBOL (STYLE BARU: HIJAU TIMBUL) --- */
         .btn-minimal {
             display: block;
             width: 100%;
-            padding: 8px 0;
+            padding: 10px 0;
             text-align: center;
             text-decoration: none;
-            font-size: 0.8rem;
-            font-weight: 600;
-            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border-radius: 12px;
             transition: all 0.2s ease;
-            background-color: transparent;
-            color: var(--primary-color);
-            border: 1px solid var(--primary-color);
+            
+            background-color: var(--btn-color); 
+            color: white;
+            border: none;
+            
+            box-shadow: 0 4px 0 var(--btn-shadow-color); 
+            margin-bottom: 4px;
         }
 
-        .btn-minimal:hover, .btn-minimal:active {
-            background-color: var(--primary-color);
-            color: white;
-            animation: geter 0.4s ease-in-out; 
+        .btn-minimal:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 0 var(--btn-shadow-color);
+        }
+
+        .btn-minimal:active {
+            transform: translateY(4px);
+            box-shadow: 0 0 0 var(--btn-shadow-color);
         }
 
     </style>
@@ -240,4 +271,3 @@
 
 </body>
 </html>
-
